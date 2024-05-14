@@ -7,12 +7,12 @@ from customer import Customer
 class Interface:
     """
     Instance of this class handles all communication with users.
-    It also shuffles newly created customers
-    to a database (only backend inter-object operation in this app)
+    It also automatically shuffles newly user-created customers
+    to the database (which is the only sort-of-backend inter-object operation in this app)
     """
 
     def __init__(self,database=Database()):
-        # here could be a dependency injection, probably as (self, database, customer)
+
         """
         Initialization of an instance of this class is an equivalent of launch of the app.
         Empty instance of customer database is automatically initialized.

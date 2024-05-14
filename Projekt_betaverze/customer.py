@@ -1,15 +1,32 @@
 class Customer:
+    """
+    This class defines an object whose attributes
+    are passed from outside through validating setters.
+    The core property of this object is a dictionary, whose keys are
+    immutable from outside, and whose values are validated inputs.
+    """
     
     def __init__(self):
-        
+        """
+        name:passed on from outside through a setter
+        age: dtto
+        contact: dtto
+        identifiers: core attribute of this class.
+        After name, age and contact inputs are validated,
+        their values are in their setters automatically entered into this dictionary.
+        age_count: for purposes of age validation:
+        if users try to enter age over 100, they are asked once whether they really mean it,
+        but if they do, on the next attempt it's allowed.
+        """
         self.__name = None
-        self.__contact = None
         self.__age = None
+        self.__contact = None
         self.__identifiers = {
             "name": self.__name,
             "age": self.__age,
             "contact": self.__contact,
         }
+        self.__age_count = 0
 
     @property
     def name(self):
@@ -17,10 +34,6 @@ class Customer:
 
     @name.setter
     def name(self, n):
-        """
-        :param n:
-        :return:
-        """
         if len(n) != 2:
             """
             Name has to be two objects in an iterable (given name and surname). 
@@ -33,16 +46,23 @@ class Customer:
         surname = n[1]
 
         try:
+            """
+            Validation is performed separately for name and surname,
+            in a method that is identical for both. 
+            """
             self.name_validation(given_name, "krestnim jmenu")
             self.name_validation(surname, "prijmeni")
-        except ValueError as error_message:#this maybe could be shortened?
+        except ValueError as error_message:
             raise ValueError(error_message)
         else:
             self.__name = given_name + " " + surname
             self.__identifiers["name"] = self.__name
 
     def name_validation(self, name, locator):
-
+        """
+        Method for validating name
+        (defined solely for purposes of avoiding repeated code for given name and surname)
+        """
         if not name:
             raise ValueError("Je nutno zadat jmeno i prijmeni")
 
@@ -72,7 +92,6 @@ class Customer:
 
     @age.setter
     def age(self, a):
-
         try:
             int(a)
         except ValueError:
@@ -80,6 +99,12 @@ class Customer:
         else:
             if int(a) < 18:
                 raise ValueError("Vek musi byt nejmene 18")
+            elif int(a) > 100:
+                if self.__age_count == 0:
+                    self.__age_count += 1
+                    #print(count)
+                    raise ValueError("Jste si jisti, ze pojistenci je vic jak 100 let?"
+                                     "Zadejte prosim vek znovu.")
             else:
                 self.__age = a
                 self.__identifiers["age"] = self.__age
@@ -93,7 +118,7 @@ class Customer:
         try:
             int(t)
         except ValueError:
-            raise ValueError("telefoni cislo musi obsahovat pouze cislice bez mezer")
+            raise ValueError("telefonni cislo musi obsahovat pouze cislice bez mezer")
         else:
             if len(t) != 9:
                 raise ValueError("telefonni cislo musi obsahovat presne 9 cislic bez mezer")
@@ -103,13 +128,17 @@ class Customer:
 
     @property
     def identifiers(self):
+        """
+        dictionary of identifiers doesn't have a setter,
+        since it is not supposed to be changed from the outside of this class.
+        """
         return self.__identifiers
 
     def __str__(self):
         """
-        this method is actually superfluous in this app, since
-        customers are delivered to the database in a form of dictionaries, not strings.
+        this method is superfluous in this app, since
+        customers are delivered to the database in the form of dictionaries, not strings.
         It would of course be possible to make them into strings and then split them and
-        create a dictionary in Database class, but that would be more complicated and I am not aware of any advantages.
+        create a dictionary in the Database class, but that would be more complicated and I am not aware of any advantages.
         """
         return f"{self.name}, {self.contact}, {self.age}"
