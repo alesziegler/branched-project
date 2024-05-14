@@ -1,5 +1,9 @@
 
 from interface import Interface
+
+
+
+
 """
 This file contains only code that is impossible to repeat during the process.
 Which is only the beginning and the end message.

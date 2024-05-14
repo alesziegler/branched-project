@@ -1,5 +1,7 @@
-from customer import Customer
+
 from database import Database
+
+from customer import Customer
 
 
 class Interface:
@@ -9,13 +11,14 @@ class Interface:
     to a database (only backend inter-object operation in this app)
     """
 
-    def __init__(self):
+    def __init__(self,database=Database()):
+        # here could be a dependency injection, probably as (self, database, customer)
         """
         Initialization of an instance of this class is an equivalent of launch of the app.
         Empty instance of customer database is automatically initialized.
         Main menu is automatically opened.
         """
-        self.database = Database()
+        self.database = database
         self.choosing_from_main_menu()
 
     def make_user_pick(self):
@@ -31,7 +34,7 @@ class Interface:
         1) prints main menu,
         2) makes users pick one of its options,
         3) redirects users to relevant further processes according to their decisions,
-        4) after that recursively begins itself again until user picks the exit option.
+        4) recursively begins itself again until user picks the exit option.
         """
         print("""
                 Vase moznosti:\n
@@ -90,7 +93,7 @@ class Interface:
                 boolean = False
         """
 
-    def add_new_customer(self):
+    def add_new_customer(self,new_customer=Customer()):
         """
         Method to add new customers to a database (duh).
         Boolean variables are used in while cycles
@@ -105,7 +108,7 @@ class Interface:
         contact_invalid = True
         age_invalid = True
 
-        new_customer = Customer()
+        #new_customer = Customer()
 
         """
         unfortunately this doesn't work
