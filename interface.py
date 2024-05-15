@@ -8,7 +8,7 @@ class Interface:
     """
     Instance of this class handles all communication with users.
     It also automatically shuffles newly user-created customers
-    to the database (which is the only sort-of-backend inter-object operation in this app)
+    to the database (that is the only sort-of-backend inter-object operation in this app)
     """
 
     def __init__(self,database=Database()):
@@ -34,7 +34,7 @@ class Interface:
         1) prints main menu,
         2) makes users pick one of its options,
         3) redirects users to relevant further processes according to their decisions,
-        4) recursively begins itself again until user picks the exit option.
+        4) recursively restarts itself again until user picks the exit option(no. 4).
         """
         print("""
                 Vase moznosti:\n
@@ -59,6 +59,7 @@ class Interface:
                     print("Tohle neni spravna volba. Vyberte si prosim lepe.")
         self.choosing_from_main_menu()
 
+   
     def validate_input(self, boolean, property_of_object, prompt1, prompt2=None):
         """
          (Unfortunately this doesn't work;
@@ -76,14 +77,16 @@ class Interface:
         Variable input prompt.
         :param prompt2:
         optional second input prompt (here used for validating name(given_name,surname))
-        """
-        """
+        
         while boolean:
             data_added_to_object = input(prompt1)
             if prompt2 is not None:
                 additional_data = input(prompt2)
                 data_added_to_object = (data_added_to_object, additional_data)
             try:
+                
+                Probably the problem is here?
+                
                 property_of_object = data_added_to_object
             except ValueError as error_message:
                 # this is a custom message, defined in property setter
@@ -91,9 +94,10 @@ class Interface:
             else:
                 # when validation successful, boolean switches and process moves on:
                 boolean = False
+                
         """
-
-    def add_new_customer(self,new_customer=Customer()):
+      
+    def add_new_customer(self):
         """
         Method to add new customers to a database (duh).
         Boolean variables are used in while cycles
@@ -108,18 +112,20 @@ class Interface:
         contact_invalid = True
         age_invalid = True
 
-        #new_customer = Customer()
+        new_customer = Customer()
 
         """
         unfortunately this doesn't work
         (it asks for inputs,but it fails to pass input into setter,
         and continues with the next step):
+        
         self.validate_input(
             name_invalid,
             new_customer.name,
             "Zadejte krestni jmeno pojistence (bez mezer): ",
             "Zadejte prijmeni pojistence (bez mezer): "
         )
+        
         """
         while name_invalid:
             # this a stupidly repetitive way to do validation since clever method above doesn't work
@@ -166,6 +172,8 @@ class Interface:
         except ValueError as error_message:
             print(error_message)
         #self.choosing_from_main_menu()
+
+    
 
     def print_all_customers(self):
         """

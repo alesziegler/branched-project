@@ -1,9 +1,6 @@
 
 from interface import Interface
 
-
-
-
 """
 This file contains only the code which is not posssible to run repeatedly in the app.
 I.e. only the beginning and the end message.

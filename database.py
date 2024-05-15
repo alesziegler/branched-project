@@ -16,10 +16,11 @@ class Database:
         self.__core_database = []
 
     def add_new_customer(self, new_customer):
+        """
         for customer in self.__core_database:
             if customer == new_customer:
                 raise ValueError("Tento pojistenec uz je v evidenci.")
-
+        """
 
         self.__core_database.append(new_customer)
         #print("test append")

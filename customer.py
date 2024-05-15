@@ -99,12 +99,14 @@ class Customer:
         else:
             if int(a) < 18:
                 raise ValueError("Vek musi byt nejmene 18")
+                """
             elif int(a) > 100:
                 if self.__age_count == 0:
                     self.__age_count += 1
                     #print(count)
                     raise ValueError("Jste si jisti, ze pojistenci je vic jak 100 let?"
                                      "Zadejte prosim vek znovu.")
+                                     """
             else:
                 self.__age = a
                 self.__identifiers["age"] = self.__age
